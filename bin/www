@@ -21,6 +21,9 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+// Socket.io 
+var io = require('socket.io')(server);
+
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -60,3 +63,23 @@ function onError(error) {
 function onListening() {
   debug('Listening on port ' + server.address().port);
 }
+
+// socket.io
+io.on('connection', function (socket) {
+  var d = new Date();
+  socket.emit('date', d);
+
+  console.log('a user connected.')
+  
+  socket.on('disconnect', function() {
+    console.log('a user disconnected.')
+  })
+  socket.on('tigran-chat', function(data) {
+    console.log('tigran-chat message is received: ' + data)
+  })
+  socket.on('what-is-the-date', function(data) {
+    socket.emit('date', 'Today is: ' + new Date());
+  })
+  
+
+});
