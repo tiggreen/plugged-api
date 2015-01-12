@@ -22,8 +22,6 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
-// Socket.io 
-var io = require('socket.io')(server);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -68,8 +66,12 @@ function onListening() {
   debug('Listening on port ' + server.address().port);
 }
 
+// Socket.io 
+var io = require('socket.io')(server);
+
 // socket.io
 io.on('connection', function (socket) {
+
   var d = new Date();
   socket.emit('date', d);
 
@@ -81,6 +83,7 @@ io.on('connection', function (socket) {
   socket.on('tigran-chat', function(data) {
     console.log('tigran-chat message is received: ' + data)
   })
+
   socket.on('what-is-the-date', function(data) {
     socket.emit('date', 'Today is: ' + new Date());
   })
