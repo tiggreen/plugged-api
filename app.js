@@ -6,10 +6,11 @@ var cookieParser    = require('cookie-parser');
 var bodyParser      = require('body-parser');
 var request         = require('request');
 var oauthserver     = require('node-oauth2-server');
+var multer          = require('multer'); 
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
+var register = require('./routes/register');
 var app = express();
 
 // view engine setup
@@ -21,11 +22,14 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(multer()); // for parsing multipart/form-data
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/register', register);
+
 
 
 
