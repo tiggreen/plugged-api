@@ -77,6 +77,12 @@ io.on('connection', function (socket) {
 
   console.log('a user connected.')
 
+  // socket
+  socket.on('register', function(data) {
+    // Insert this into the database.
+    console.log(data)
+  })
+
   socket.on('disconnect', function() {
     console.log('a user disconnected.')
   })
