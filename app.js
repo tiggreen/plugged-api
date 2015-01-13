@@ -1,9 +1,11 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var express         = require('express');
+var path            = require('path');
+var favicon         = require('serve-favicon');
+var logger          = require('morgan');
+var cookieParser    = require('cookie-parser');
+var bodyParser      = require('body-parser');
+var request         = require('request');
+var oauthserver     = require('node-oauth2-server');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -24,6 +26,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+
+
+
+// handling the authorization uses OAuth2.
+
+var memorystore = require('./routes/model.js');
+
+app.oauth = oauthserver({
+  model: memorystore, // See below for specification
+  grants: ['password'],
+  debug: true
+});
+
+app.all('/oauth/token', app.oauth.grant());
+
+// app.get('/', app.oauth.authorise(), function (req, res) {
+//   res.send('Secret area');
+// });
+
+app.use(app.oauth.errorHandler());
+
 
 
 // catch 404 and forward to error handler
