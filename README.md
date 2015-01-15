@@ -1,6 +1,9 @@
 ## Plugged. 
 
-Plugged is a RESTful API for a messaging app. 
+
+Plugged is a RESTful API for a messaging app. Not released yet but
+under avtive development.
+
 
 ## Installation
 
