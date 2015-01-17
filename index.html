@@ -66,9 +66,44 @@ then you just need to install Node.js and npm comes with it.</p>
 <h2>
 <a id="api-reference" class="anchor" href="#api-reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>API Reference</h2>
 
-<p>Coming Soon...</p>
+<h3>
+<a id="verify-a-phone-number" class="anchor" href="#verify-a-phone-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>Verify a phone number.</h3>
 
-<p>Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.</p>
+<div class="highlight highlight-javascript"><pre>POST  https<span class="pl-k">:</span><span class="pl-c">//plugged-api.herokuapp.com/verify/phone</span>
+
+REQ HEADER
+{ 
+    Content<span class="pl-k">-</span>Type<span class="pl-k">:</span> application/json
+}
+
+REQ BODY
+{
+  phone<span class="pl-k">:</span> your_phone_number
+}
+</pre></div>
+
+<p>After requesting to verify your phone number you will get a pin as a text message.
+Once you have the pin, you can use the following endpoint to finish your phone number
+verification.</p>
+
+<h3>
+<a id="verify-the-pin" class="anchor" href="#verify-the-pin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Verify the pin.</h3>
+
+<div class="highlight highlight-javascript"><pre>POST  https<span class="pl-k">:</span><span class="pl-c">//plugged-api.herokuapp.com/verify/pin</span>
+
+REQ HEADER
+{ 
+    Content<span class="pl-k">-</span>Type<span class="pl-k">:</span> application/json
+}
+
+REQ BODY
+{
+  phone<span class="pl-k">:</span> your_phone_number,
+  pin<span class="pl-k">:</span> your_pin
+}
+</pre></div>
+
+<p>In Development...</p>
 
 <h2>
 <a id="tests" class="anchor" href="#tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tests</h2>
