@@ -42,7 +42,7 @@ You're all set.
 
 ### Verify a phone number.
 
-```
+```javascript
 POST  https://plugged-api.herokuapp.com/verify/phone
 
 REQ HEADER
@@ -63,7 +63,7 @@ verification.
 
 ### Verify the pin. 
 
-```
+```javascript
 POST  https://plugged-api.herokuapp.com/verify/pin
 
 REQ HEADER
