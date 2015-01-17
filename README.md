@@ -40,7 +40,44 @@ You're all set.
 
 ## API Reference
 
-Coming Soon...
+To verify a phone number.
+
+```
+POST  https://plugged-api.herokuapp.com/verify/phone
+
+REQ HEADER
+{ 
+	Content-Type: application/json
+}
+
+REQ BODY
+{
+  phone: your_phone_number
+}
+
+```
+
+After requesting to verify your phone number you will get a pin as a text message.
+Once you have the pin, you can use the following endpoint to finish your phone number
+verification.
+
+```
+POST  https://plugged-api.herokuapp.com/verify/pin
+
+REQ HEADER
+{ 
+	Content-Type: application/json
+}
+
+REQ BODY
+{
+  phone: your_phone_number,
+  pin: you_pin
+}
+
+```
+
+
 
 Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
 
