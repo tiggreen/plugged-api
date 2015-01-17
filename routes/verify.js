@@ -17,7 +17,7 @@ router.post('/phone', function(req, res) {
 
 	console.log(req.body)
 
-	var pin = Math.floor(Math.random()*10000)
+	var pin = Math.floor(Math.random()*9000) + 1000;
 	 
 	// Sending a text message to the requester number.
 	client.messages.create({ 
