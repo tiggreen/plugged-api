@@ -21,6 +21,8 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+
 var io = require('socket.io')(server);
 
 /**
@@ -29,10 +31,9 @@ var io = require('socket.io')(server);
 
 server.listen(port);
 
-// console.log("Listening on port " + port);
+console.log("Listening on port " + port);
 
 server.on('error', onError);
-server.on('listening', onListening);
 
 /**
  * Event listener for HTTP server "error" event.
@@ -57,27 +58,3 @@ function onError(error) {
       throw error;
   }
 }
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  debug('Listening on port ' + server.address().port);
-}
-
-io.on('connection', function (socket) {
-
-  console.log('a user connected.')
-  
-  var d = new Date()
-  socket.emit('date', d);
-
-  socket.on('body', function (data) {
-    console.log(data);
-  });
-
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
