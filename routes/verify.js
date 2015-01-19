@@ -51,8 +51,11 @@ router.post('/pin', function(req, res) {
 
 	var query = {
 		pin: req.body.pin,
-		phone: req.body.phone
+		phone: req.body.phone,
+		// pins have 30 mins expiration.
+		timestamp: { $gt: new Date(Date.now() - (30 * 60000)) }
 	};
+	age: { $gt: 18 } 
 
 	validation.findOneAndUpdate(query, { verified: true }, 
 		function(err, results) {
