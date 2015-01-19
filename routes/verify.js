@@ -30,8 +30,7 @@ router.post('/phone', function(req, res) {
 			// Once we sent the pin let's record this in the Validation module.
 			var record = new validation({ 
 				phone: req.body.phone, 
-				pin: pin, 
-				timestamp: Date.now()
+				pin: pin
 			});
 
 			record.save(function (err) {
@@ -50,27 +49,23 @@ router.post('/phone', function(req, res) {
 
 router.post('/pin', function(req, res) {
 
-	validation.findOne({
-		  pin: req.body.pin,
-		  phone: req.body.phone
+	var query = {
+		pin: req.body.pin,
+		phone: req.body.phone
+	};
 
-		}, function (err, results) {
+	validation.findOneAndUpdate(query, { verified: true }, 
+		function(err, results) {
+
 			if (! err && results) {
-				results.verifed = true;
-				results.save(function(err, result){
-					if (! err) {
-						console.log(result);
-						res.status(201).send('Successfully verifed ' + req.body.phone);
-					} else {
-						res.status(500).send({ error: 'Could not verify the pin.' });
-					}
-				})
+
+				console.log(results);
+				res.status(201).send('Successfully verifed ' + req.body.phone);
 
 			} else {
-				res.status(500).send({ error: 'Could not find the pin the given credentials.' });
+						res.status(500).send({ error: 'Could not verify the pin.' });
 			}
-
-	});
+		})
 });
 
 module.exports = router;

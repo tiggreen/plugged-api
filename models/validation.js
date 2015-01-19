@@ -18,7 +18,7 @@ _ timestamp: The exact timestamp when the validation request was sent.
 var validationSchema = new Schema({
   phone:  { type: Number, index: true },
   pin: Number,
-  timestamp:   Date,
+  timestamp:   { type: Date, default: Date.now},
   verified: { type: Boolean, default: false },
 });
 
