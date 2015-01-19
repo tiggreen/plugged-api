@@ -12,7 +12,10 @@ var client = require('twilio')(accountSid, authToken);
 
 var validation = require('../models/validation')
 
-
+/*
+*
+* Verify the phone number of a user.
+*/
 router.post('/phone', function(req, res) {
 
 	console.log(req.body)
@@ -47,6 +50,12 @@ router.post('/phone', function(req, res) {
 	});
 });
 
+
+/*
+*
+* Verify the pin for a given number. Pin is a four digit
+* number sent by a user.
+*/
 router.post('/pin', function(req, res) {
 
 	var query = {
@@ -64,7 +73,7 @@ router.post('/pin', function(req, res) {
 				res.status(201).send('Successfully verifed ' + req.body.phone);
 
 			} else {
-						res.status(500).send({ error: 'Could not verify the pin.' });
+				res.status(500).send({ error: 'Could not verify the pin.' });
 			}
 		})
 });
