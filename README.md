@@ -79,15 +79,25 @@ REQ BODY
 
 ```
 
+Please keep in mind that pins are valid only for 30 min.
+
 In Development...
 
 ## Tests
 
-Describe and show how to run the tests with code examples.
+All tests are implemented using [Mocha](http://mochajs.org/) framework.
+
+To run all the test simple run
+
+```
+mocha
+```
+
+on the terminal. 
 
 ## Contributors
 
-Let people know how they can dive into the project, include important links to things like issue trackers, irc, twitter accounts if applicable.
+@tiggreen
 
 ## License
 
