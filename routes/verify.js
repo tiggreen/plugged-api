@@ -18,7 +18,8 @@ var validation = require('../models/validation')
 */
 router.post('/phone', function(req, res) {
 	
-	console.log(req.body)
+	if (!req.body.phone) next();
+
 
 	var pin = Math.floor(Math.random()*9000) + 1000;
 	 
@@ -58,6 +59,8 @@ router.post('/phone', function(req, res) {
 * number sent by a user.
 */
 router.post('/pin', function(req, res) {
+
+	if (!req.body.pin || !req.body.phone) next();
 
 	var query = {
 		pin: req.body.pin,

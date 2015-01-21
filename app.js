@@ -18,20 +18,39 @@ function error(status, msg) {
   return err;
 }
 
-
-var routes = require('./routes/index');
-var verify = require('./routes/verify');
-
 // creating an express app.
 var app = express();
 
-// here we validate the API key,
-// by mounting this middleware to /api
-// meaning only paths prefixed with "/api"
-// will cause this middleware to be invoked
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(multer()); // for parsing multipart/form-data
+app.use(cookieParser());
 
-app.use('/', function(req, res, next){
-  var key = 'foo'; //req.query['api-key'];
+
+/*
+* Setting up the API-KEY authentication.
+*
+*/
+
+// map of valid api keys, typically mapped to
+// account info with some sort of database like redis.
+// api keys do _not_ serve as authentication, merely to
+// track API usage or help prevent malicious behavior etc.
+
+/*
+var apiKeys = [process.env.API_KEY];
+
+console.log(apiKeys);
+
+// here we validate the API key,
+
+app.all('*', function(req, res, next) {
+
+
+  var key = req.header('api_key');
+
+  console.log(key);
 
   // key isn't present
   if (!key) return next(error(400, 'api key required'));
@@ -43,19 +62,13 @@ app.use('/', function(req, res, next){
   req.key = key;
   next();
 });
+*/
 
-// map of valid api keys, typically mapped to
-// account info with some sort of database like redis.
-// api keys do _not_ serve as authentication, merely to
-// track API usage or help prevent malicious behavior etc.
-var apiKeys = ['foo', 'bar', 'baz'];
 
 /*
 * Setting up the mongoDB connections
 *
-*/
-// Here we find an appropriate database to connect to, defaulting to
-// localhost if we don't find one.  
+*/ 
 var uristring =  process.env.MONGOLAB_URI ||  
                  process.env.MONGOHQ_URL || 
                  'mongodb://localhost/plugged_db';
@@ -70,12 +83,9 @@ mongoose.connect(uristring, function(err, res) {
 });
 
 
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer()); // for parsing multipart/form-data
-app.use(cookieParser());
 
+var routes = require('./routes/index');
+var verify = require('./routes/verify');
 
 app.use('/', routes);
 app.use('/verify', verify);
@@ -103,7 +113,7 @@ app.use(app.oauth.errorHandler());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = error('Not Found', 404);
+    var err = error(404, 'Not Found');
     next(err);
 });
 
