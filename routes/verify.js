@@ -17,7 +17,7 @@ var validation = require('../models/validation')
 * Verify the phone number of a user.
 */
 router.post('/phone', function(req, res) {
-
+	
 	console.log(req.body)
 
 	var pin = Math.floor(Math.random()*9000) + 1000;
@@ -38,14 +38,15 @@ router.post('/phone', function(req, res) {
 
 			record.save(function (err) {
 			  if (err) {
-			  	res.status(500).send({ error: 'Something blew up' });
+			  	res.status(500).send({ message: 'Server error.' });
 			  }
 			  // saved!
-			  res.status(201).send('Successful! Yaay!');
+			  res.status(200).send({message: 'OK'});
 			})
 			
 		} else {
-			res.status(401).send({ error: 'Twilio blew up something' });
+			console.log(res);
+			res.status(502).send({ message: 'Twilio blew up something' });
 		}
 	});
 });
@@ -70,10 +71,10 @@ router.post('/pin', function(req, res) {
 			if (! err && results) {
 
 				console.log(results);
-				res.status(201).send('Successfully verifed ' + req.body.phone);
+				res.status(200).send({ message: 'OK' });
 
 			} else {
-				res.status(500).send({ error: 'Could not verify the pin.' });
+				res.status(500).send({ message: 'Could not verify the pin.' });
 			}
 		})
 });
