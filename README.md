@@ -92,8 +92,40 @@ REQ BODY
 }
 
 ```
-
 Please keep in mind that pins are valid only for 30 min.
+
+### Socket.IO channels.
+
+We have a short WebSocket channel open via socket.io.
+It listens on the channel called 'message'.
+
+This is how the server code looks like at our side.
+
+```javascript
+io.on('connection', function(socket){
+  console.log('a user connected via WebSocket.');
+
+  socket.on('message', function(msg){
+    console.log('message: ' + msg);
+    socket.emit('reply', 'This is a message via socket.io server. Yaaay.');
+  });
+});
+```
+
+You can easily implement a client that talks to our server. An example client code
+is below. 
+
+```javascript
+<script>
+  var socket = io.connect("https://plugged-api.herokuapp.com");
+
+    socket.emit('message', { my: 'hello world' });
+
+    socket.on('reply', function(msg){
+      console.log(msg);
+    });
+</script>
+```
 
 In Development...
 

@@ -109,33 +109,31 @@ app.all('/oauth/token', app.oauth.grant());
 
 app.use(app.oauth.errorHandler());
 
+/*
+* Error Handling
+*
+*/
 
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = error(404, 'Not Found');
-    next(err);
+// middleware with an arity of 4 are considered
+// error handling middleware. When you next(err)
+// it will be passed through the defined middleware
+// in order, but ONLY those with an arity of 4, ignoring
+// regular middleware.
+app.use(function(err, req, res, next){
+  // whatever you want here, feel free to populate
+  // properties on `err` to treat it differently in here.
+  res.status(err.status || 500);
+  res.send({ error: err.message });
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    var status = err.status || 500;
-    res.send(error('Error occured', status))
+// our custom JSON 404 middleware. Since it's placed last
+// it will be the last middleware called, if all others
+// invoke next() and do not respond.
+app.use(function(req, res){
+  res.status(404);
+  res.send({ error: "Lame, can't find that" });
 });
+
+
 
 module.exports = app;

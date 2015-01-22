@@ -25,6 +25,16 @@ var server = http.createServer(app);
 
 var io = require('socket.io')(server);
 
+io.on('connection', function(socket){
+  console.log('a user connected via WebSocket.');
+
+  socket.on('message', function(msg){
+    console.log('message: ' + msg);
+    socket.emit('reply', 'This is a message via socket.io server. Yaaay.');
+  });
+
+});
+
 /**
  * Listen on provided port, on all network interfaces.
  */
