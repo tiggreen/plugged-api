@@ -29,10 +29,29 @@
       </header>
       <section>
         <h2>
-<a id="plugged" class="anchor" href="#plugged" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugged.</h2>
+<a id="plugged-api" class="anchor" href="#plugged-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugged API</h2>
 
-<p>Plugged is a RESTful API for a messaging app. Not released yet but
-under avtive development.</p>
+<h3>
+<a id="plugged-is-a-restful-api-for-a-messaging-app" class="anchor" href="#plugged-is-a-restful-api-for-a-messaging-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugged is a RESTful API for a messaging app.</h3>
+
+<h4>
+<a id="not-released-yet-but-under-active-development" class="anchor" href="#not-released-yet-but-under-active-development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Not released yet but under active development.</h4>
+
+<p>The Plugged API is organized around REST. The API uses HTTP response codes to indicate API responses and errors. JSON will be returned in all responses from the API, including errors.</p>
+
+<p>To make the Plugged API to more accessible we provide a test API.</p>
+
+<h3>
+<a id="http-status-code-summary" class="anchor" href="#http-status-code-summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTTP Status Code Summary</h3>
+
+<ul>
+<li>200 OK - Everything worked as expected.</li>
+<li>400 Bad Request - Often missing a required parameter.</li>
+<li>401 Unauthorized - No valid API key provided.</li>
+<li>402 Request Failed - Parameters were valid but request failed.</li>
+<li>404 Not Found - The requested item doesn't exist.</li>
+<li>500, 502, 503, 504 Server errors. Somethine occured our server end.</li>
+</ul>
 
 <h2>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
@@ -103,20 +122,141 @@ REQ BODY
 }
 </pre></div>
 
+<p>Please keep in mind that pins are valid only for 30 min.</p>
+
 <p>In Development...</p>
 
 <h2>
 <a id="tests" class="anchor" href="#tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tests</h2>
 
-<p>Describe and show how to run the tests with code examples.</p>
+<p>All tests are implemented using <a href="http://mochajs.org/">Mocha</a> framework.</p>
+
+<p>To run all the test simply run</p>
+
+<pre><code>mocha
+</code></pre>
+
+<p>on the terminal. </p>
 
 <h2>
 <a id="contributors" class="anchor" href="#contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributors</h2>
 
-<p>Let people know how they can dive into the project, include important links to things like issue trackers, irc, twitter accounts if applicable.</p>
+<p><a href="https://github.com/tiggreen" class="user-mention">@tiggreen</a></p>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>MIT
+The Stripe API is organized around REST. Our API is designed to have predictable, resource-oriented URLs and to use HTTP response codes to indicate API errors. We use built-in HTTP features, like HTTP authentication and HTTP verbs, which can be understood by off-the-shelf HTTP clients, and we support cross-origin resource sharing to allow you to interact securely with our API from a client-side web application (though you should remember that you should never expose your secret API key in any public website's client-side code). JSON will be returned in all responses from the API, including errors (though if you're using API bindings, we will convert the response to the appropriate language-specific object).
+To make the Stripe API as explorable as possible, accounts have test-mode API keys as well as live-mode API keys. These keys can be active at the same time. Data created with test-mode credentials will never hit the credit card networks and will never cost anyone money.</p>
+
+<h3>
+<a id="http-status-code-summary-1" class="anchor" href="#http-status-code-summary-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTTP Status Code Summary</h3>
+
+<ul>
+<li>200 OK - Everything worked as expected.</li>
+<li>400 Bad Request - Often missing a required parameter.</li>
+<li>401 Unauthorized - No valid API key provided.</li>
+<li>402 Request Failed - Parameters were valid but request failed.</li>
+<li>404 Not Found - The requested item doesn't exist.</li>
+<li>500, 502, 503, 504 Server errors - something went wrong on Stripe's end.</li>
+</ul>
+
+<p>Plugged is a RESTful API for a messaging app. Not released yet but
+under avtive development.</p>
+
+<h2>
+<a id="installation-1" class="anchor" href="#installation-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Download the .zip of the project and extract it.</p>
+
+<p>Go to the directory via your terminal of choice and run - </p>
+
+<pre><code>sudo npm install
+</code></pre>
+
+<p>This will install all the required modules of the service.</p>
+
+<p>I assume you have <strong>npm</strong> (Node Package Manager) installed. If you don't
+then you just need to install Node.js and npm comes with it.</p>
+
+<p>After the modules are installed make sure <strong>node_modules</strong> directory is created in your current dir. </p>
+
+<p>The last step is to run the server -   </p>
+
+<pre><code>./bin/www
+</code></pre>
+
+<p>This will start the server on your localhost at port number 3000. </p>
+
+<pre><code>localhost:3000
+</code></pre>
+
+<p>You're all set.</p>
+
+<h2>
+<a id="api-reference-1" class="anchor" href="#api-reference-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>API Reference</h2>
+
+<h3>
+<a id="verify-a-phone-number-1" class="anchor" href="#verify-a-phone-number-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Verify a phone number.</h3>
+
+<div class="highlight highlight-javascript"><pre>POST  https<span class="pl-k">:</span><span class="pl-c">//plugged-api.herokuapp.com/verify/phone</span>
+
+REQ HEADER
+{ 
+    Content<span class="pl-k">-</span>Type<span class="pl-k">:</span> application/json
+}
+
+REQ BODY
+{
+  phone<span class="pl-k">:</span> your_phone_number
+}
+</pre></div>
+
+<p>After requesting to verify your phone number you will get a pin as a text message.
+Once you have the pin, you can use the following endpoint to finish your phone number
+verification.</p>
+
+<h3>
+<a id="verify-the-pin-1" class="anchor" href="#verify-the-pin-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Verify the pin.</h3>
+
+<div class="highlight highlight-javascript"><pre>POST  https<span class="pl-k">:</span><span class="pl-c">//plugged-api.herokuapp.com/verify/pin</span>
+
+REQ HEADER
+{ 
+    Content<span class="pl-k">-</span>Type<span class="pl-k">:</span> application/json
+}
+
+REQ BODY
+{
+  phone<span class="pl-k">:</span> your_phone_number,
+  pin<span class="pl-k">:</span> your_pin
+}
+</pre></div>
+
+<p>Please keep in mind that pins are valid only for 30 min.</p>
+
+<p>In Development...</p>
+
+<h2>
+<a id="tests-1" class="anchor" href="#tests-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tests</h2>
+
+<p>All tests are implemented using <a href="http://mochajs.org/">Mocha</a> framework.</p>
+
+<p>To run all the test simply run</p>
+
+<pre><code>mocha
+</code></pre>
+
+<p>on the terminal. </p>
+
+<h2>
+<a id="contributors-1" class="anchor" href="#contributors-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributors</h2>
+
+<p><a href="https://github.com/tiggreen" class="user-mention">@tiggreen</a></p>
+
+<h2>
+<a id="license-1" class="anchor" href="#license-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>MIT</p>
       </section>
